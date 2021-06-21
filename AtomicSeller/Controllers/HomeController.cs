@@ -43,7 +43,13 @@ namespace AtomicSeller.Controllers
         [HttpGet]
         public ActionResult Transport_tracking()
         {
-            new Yr().Yr_Transport_tracking();
+            TrackingResponse _Result =  new Yr().Yr_Transport_tracking();
+
+            if (string.IsNullOrEmpty(_Result._header.ReturnMessage))
+                FlashMessage.Flash(TempData, new FlashMessage("", FlashMessageType.Success, "Ok", true));
+            else
+                FlashMessage.Flash(TempData, new FlashMessage(_Result._header.ReturnMessage, FlashMessageType.Warning, "Error", true));
+
 
             return RedirectToAction("Index", "Home");
         }
@@ -51,7 +57,13 @@ namespace AtomicSeller.Controllers
         [HttpGet]
         public ActionResult Transport_proof_of_delivery()
         {
-            new Yr().Yr_Transport_proof_of_delivery();
+            PodResponse _Result = new Yr().Yr_Transport_proof_of_delivery();
+
+            if (string.IsNullOrEmpty(_Result._header.ReturnMessage))
+                FlashMessage.Flash(TempData, new FlashMessage("", FlashMessageType.Success, "Ok", true));
+            else
+                FlashMessage.Flash(TempData, new FlashMessage(_Result._header.ReturnMessage, FlashMessageType.Warning, "Error", true));
+
 
             return RedirectToAction("Index", "Home");
         }

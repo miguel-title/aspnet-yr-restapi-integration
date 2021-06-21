@@ -22,6 +22,7 @@ namespace AtomicSeller.Helpers.eCommerceConnectors
         
         private static String API_BASE_URL = "http://server.a1ws.es/api_transport/public/api";
         private static String Token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiMzc1NWZlYmFmY2EyNDhjZjQ3MDI5MzNjZmIwODNjMjYyNjk3OWUwYTgzNGZmZWRmZGZmYjE2NDMyNWEzOGJhYjI1Y2MzOGM3NjIxZGZiODYiLCJpYXQiOjE2MjM0MjUxNDUsIm5iZiI6MTYyMzQyNTE0NSwiZXhwIjoxNjU0OTYxMTQ1LCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.Z9JTUmLCcfhZc-30JkonHJAqzqy14v98HbnyWT4qy3lMp-KCXaV0pvCZTVmC42NbrG5mPw3uxxZeXpx_nzsD1kB4NB701B-e9t9DL-6qUZ1TUHW_vcnsSFUSizueUM-Xoqw8qlsZLqn3Is7tBJZzRo0mnw89ep08aUNFKENBCfrutt2al1ZwYLun3C-GfuhvDkLppsVck0VeduuBPFz3LU2eOoRdny-6OnAxX_DTvbAjNaYeOYABwrUCuH7jiZtN_zjg-nFNrabGFxcNOhhMA-BmKTi017y3CCY_2cPcJD57bmTME9fFPMsjG_NjkxhKQ-KE2WQI45bU38qQt2kettDqctzvyw52SBQwG2mX3KZXOxvTRVIqpXIyuJM2NikKUHEicH4bbEfTHw023-FVQVlIRBdUY-jtuNoxZZhL4EjsGIMga-2ZNp8O1lUNOuZTJNJBgicyH3PyYcEIzfvyXrBuoavrh2a_YJSagxMUxtK9RVWIoR_YvitM5tiD6QjGE1f83ca67aF_QdjXKXD_hsce_Mcq2BPdXCQUFRtcAUmB_kGR5i9GymnxoIMe6iusgiT6PhmOjsl432q3tX1pjb-fUhM6xuKYOnFpQ3qnwagI5FRfDPAIh3SxgBqf683RCNwvG2XLxMKEWuUC0GS0Ag6oYIFUl2IqhYtx72B9PxA";
+        public static string TrackingNumber = "";
 
         public static string ErrorMessage = "";
 
@@ -250,6 +251,7 @@ namespace AtomicSeller.Helpers.eCommerceConnectors
                 /***********************************/
 
                 _Shipmentdata = JsonConvert.DeserializeObject<ShipmentResponseData>(ShipmentResult);
+                TrackingNumber = _Shipmentdata.success[0].tracking_number;
 
                 _ShipmentResponseHeader.LanguageCode = "En";
                 _ShipmentResponseHeader.RequestStatus = "Ok";
@@ -272,23 +274,32 @@ namespace AtomicSeller.Helpers.eCommerceConnectors
 
         public TrackingResponse Yr_Transport_tracking()
         {
+
+            TrackingResponse _TrackingResponse = new TrackingResponse();
+            ResponseHeader _TrackingResponseHeader = new ResponseHeader();
+            TrackingResponseData _Trackingdata = new TrackingResponseData();
+            if (TrackingNumber == "")
+            {
+                _TrackingResponseHeader.LanguageCode = "En";
+                _TrackingResponseHeader.RequestStatus = "Error";
+                _TrackingResponseHeader.ReturnCode = "WZ0";
+                _TrackingResponseHeader.ReturnMessage = "Please create the shipment.";
+
+                _TrackingResponse._header = _TrackingResponseHeader;
+                return _TrackingResponse;
+            }
             String Tracking_API_URL = API_BASE_URL + "/tracking";
 
             //set Request
             string jsonParam = string.Empty;
             TrackingRequest request = new TrackingRequest();
-            request.tracking_number = "4114596485";
+            request.tracking_number = TrackingNumber;
             request.transport_code = "DHL";
             request.language = "FR";
 
             jsonParam = JsonConvert.SerializeObject(request).ToString();
 
             jsonParam = jsonParam.Replace("__",".");
-
-            //Set Response 
-            TrackingResponse _TrackingResponse = new TrackingResponse();
-            ResponseHeader _TrackingResponseHeader = new ResponseHeader();
-            TrackingResponseData _Trackingdata = new TrackingResponseData();
 
             try
             {
@@ -318,23 +329,32 @@ namespace AtomicSeller.Helpers.eCommerceConnectors
 
         public PodResponse Yr_Transport_proof_of_delivery()
         {
+            PodResponse _PodResponse = new PodResponse();
+            ResponseHeader _PodResponseHeader = new ResponseHeader();
+            PodResponseData _Poddata = new PodResponseData();
+            if (TrackingNumber == "")
+            {
+                _PodResponseHeader.LanguageCode = "En";
+                _PodResponseHeader.RequestStatus = "Error";
+                _PodResponseHeader.ReturnCode = "WZ0";
+                _PodResponseHeader.ReturnMessage = "Please create the shipment.";
+
+                _PodResponse._header = _PodResponseHeader;
+                return _PodResponse;
+            }
+
             String Pod_API_URL = API_BASE_URL + "/pod";
 
             //set Request
             string jsonParam = string.Empty;
             PodRequest request = new PodRequest();
             request.language = "FR";
-            request.tracking_number = "4114596485";
+            request.tracking_number = TrackingNumber;
             request.transport_code = "DHL";
 
             jsonParam = JsonConvert.SerializeObject(request).ToString();
 
             jsonParam = jsonParam.Replace("__", ".");
-
-            //Set Response 
-            PodResponse _PodResponse = new PodResponse();
-            ResponseHeader _PodResponseHeader = new ResponseHeader();
-            PodResponseData _Poddata = new PodResponseData();
 
             try
             {
