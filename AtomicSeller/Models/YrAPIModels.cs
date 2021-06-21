@@ -72,6 +72,7 @@ namespace YrAPI.Models
     //Shipment Data Structure
     public class ShipmentRequest
     {
+        public string shipper_id { get; set; }
         public string account__number { get; set; }
         public string account__country_code { get; set; }
         public string product_code { get; set; }

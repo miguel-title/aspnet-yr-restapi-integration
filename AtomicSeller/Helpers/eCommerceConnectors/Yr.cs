@@ -82,21 +82,21 @@ namespace AtomicSeller.Helpers.eCommerceConnectors
             string jsonParam = string.Empty;
             QuoteRequest request = new QuoteRequest();
 
-            request.account__country_code = "";
+            request.account__country_code = "FR";
             request.account__number = "";
             request.date_pickup = "2021-06-21";
             request.declared_value = "10";
-            request.transport_code = "DPD";
+            request.transport_code = "DHL";
             countryInfo _frominfo = new countryInfo();
-            _frominfo.city = "XXX";
+            _frominfo.city = "Lyon";
             _frominfo.country_code = "FR";
-            _frominfo.postal_code = "";
+            _frominfo.postal_code = "59115";
             _frominfo.state_code = "";
             request.from = _frominfo;
             countryInfo _toinfo = new countryInfo();
-            _toinfo.city = "XXX";
+            _toinfo.city = "Montaigu";
             _toinfo.country_code = "FR";
-            _toinfo.postal_code = "";
+            _toinfo.postal_code = "78000";
             _toinfo.state_code = "";
             request.to = _toinfo;
             request.type = "p";
@@ -153,42 +153,49 @@ namespace AtomicSeller.Helpers.eCommerceConnectors
             //set Request
             string jsonParam = string.Empty;
             ShipmentRequest request = new ShipmentRequest();
+            request.shipper_id = "atomicseller";
             request.account__number = "";
-            request.account__country_code = "";
-            request.product_code = "";
+            request.account__country_code = "FR";
+            request.product_code = "DHL11";
             companyInfo _frominfo = new companyInfo();
-            _frominfo.company = "";
+            _frominfo.company = "VF Solutions";
             _frominfo.country_code = "FR";
-            _frominfo.city = "XXX";
-            _frominfo.postal_code = "";
+            _frominfo.city = "Lyon";
+            _frominfo.postal_code = "59115";
             _frominfo.state_code = "";
             contactInfo _fromcontact = new contactInfo();
-            _fromcontact.name = "from_name";
-            _fromcontact.phone = "1234567890";
-            _fromcontact.email = "";
+            _fromcontact.name = "STOCK LOGISTIC";
+            _fromcontact.phone = "0320200903";
+            _fromcontact.email = "vfsols@atomicseller.fr";
             _frominfo.contact = _fromcontact;
             List<address> _lstfromaddress = new List<address>();
             address _fromaddress = new address();
-            _fromaddress.line = "YYY";
+            _fromaddress.line = "16 Rue du Trieu Quesnoy";
             _lstfromaddress.Add(_fromaddress);
             _frominfo.address = _lstfromaddress;
             request.from = _frominfo;
 
             companyInfo _toinfo = new companyInfo();
-            _toinfo.company = "";
+            _toinfo.company = "GEMMA";
             _toinfo.country_code = "FR";
-            _toinfo.city = "XXX";
-            _toinfo.postal_code = "";
+            _toinfo.city = "Montaigu";
+            _toinfo.postal_code = "78000";
             _toinfo.state_code = "";
             contactInfo _tocontact = new contactInfo();
-            _tocontact.name = "toname";
-            _tocontact.phone = "1234567890";
-            _tocontact.email = "";
+            _tocontact.name = "GLASS";
+            _tocontact.phone = "3378855299339";
+            _tocontact.email = "test@atomicseller.com";
             _toinfo.contact = _tocontact;
             List<address> _lsttoaddress = new List<address>();
-            address _toaddress = new address();
-            _toaddress.line = "ZZZ";
-            _lsttoaddress.Add(_toaddress);
+            address _toaddress1 = new address();
+            _toaddress1.line = "Rue Henri Dunant";
+            _lsttoaddress.Add(_toaddress1);
+            address _toaddress2 = new address();
+            _toaddress2.line = "Etage 3";
+            _lsttoaddress.Add(_toaddress2);
+            address _toaddress3 = new address();
+            _toaddress3.line = "Batiment 4";
+            _lsttoaddress.Add(_toaddress3);
             _toinfo.address = _lsttoaddress;
             request.to = _toinfo;
 
@@ -270,8 +277,8 @@ namespace AtomicSeller.Helpers.eCommerceConnectors
             //set Request
             string jsonParam = string.Empty;
             TrackingRequest request = new TrackingRequest();
-            request.tracking_number = "tracking_number";
-            request.transport_code = "DPD";
+            request.tracking_number = "4114596485";
+            request.transport_code = "DHL";
             request.language = "FR";
 
             jsonParam = JsonConvert.SerializeObject(request).ToString();
@@ -317,8 +324,8 @@ namespace AtomicSeller.Helpers.eCommerceConnectors
             string jsonParam = string.Empty;
             PodRequest request = new PodRequest();
             request.language = "FR";
-            request.tracking_number = "tracking_number";
-            request.transport_code = "DPD";
+            request.tracking_number = "4114596485";
+            request.transport_code = "DHL";
 
             jsonParam = JsonConvert.SerializeObject(request).ToString();
 
