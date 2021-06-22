@@ -12,12 +12,12 @@ namespace YrAPI.Models
     //Quote Data Structur
     public class QuoteRequest
     {
-        public string account__number{ get; set; }
+        public string account__number { get; set; }
         public string account__country_code { get; set; }
-        public string transport_code{ get; set; }
+        public string transport_code { get; set; }
         public countryInfo from { get; set; }
-        public countryInfo to {get;set;}
-        public string date_pickup{ get; set; }
+        public countryInfo to { get; set; }
+        public string date_pickup { get; set; }
         public string declared_value { get; set; }
         public string type { get; set; }
         public List<piece> piece { get; set; }
@@ -141,19 +141,6 @@ namespace YrAPI.Models
         public ShipmentResponseData _data { get; set; }
     }
 
-    public class ShipmentResponseData
-    {
-        public string message_time { get; set; }
-        public string message_reference { get; set; }
-        public List<shipmentsuccess> success { get; set; }
-    }
-
-    public class shipmentsuccess
-    {
-        public string tracking_number { get; set; }
-        public string tracking_label_pdf { get; set; }
-        public string reservation_number { get; set; }
-    }
 
     //Tracking Data Structure
     public class TrackingRequest
@@ -171,11 +158,17 @@ namespace YrAPI.Models
 
     public class TrackingResponseData
     {
-        public string message_time { get; set; }
+        public DateTime message_time { get; set; }
         public string message_reference { get; set; }
         public trackingsuccess success { get; set; }
+        public Error error { get; set; }
     }
 
+    public class Error
+    {
+        public string code { get; set; }
+        public string message { get; set; }
+    }
     public class trackingsuccess
     {
         public string transport_code { get; set; }
@@ -240,4 +233,38 @@ namespace YrAPI.Models
 
         public string LanguageCode { get; set; }
     }
+
+
+
+    public class ShipmentResponseData
+    {
+        public DateTime message_time { get; set; }
+        public string message_reference { get; set; }
+        public shipmentsuccess success { get; set; }
+    }
+
+    public class shipmentsuccess
+    {
+        public string tracking_number { get; set; }
+        public string tracking_label_pdf { get; set; }
+        public string reservation_number { get; set; }
+    }
+
+
+
+
+    /*
+    public class Rootobject
+    {
+        public DateTime message_time { get; set; }
+        public string message_reference { get; set; }
+        public Success success { get; set; }
+    }
+
+    public class Success
+    {
+        public string tracking_number { get; set; }
+        public string tracking_label_pdf { get; set; }
+    }
+    */
 }

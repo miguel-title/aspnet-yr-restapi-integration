@@ -251,7 +251,7 @@ namespace AtomicSeller.Helpers.eCommerceConnectors
                 /***********************************/
 
                 _Shipmentdata = JsonConvert.DeserializeObject<ShipmentResponseData>(ShipmentResult);
-                TrackingNumber = _Shipmentdata.success[0].tracking_number;
+                TrackingNumber = _Shipmentdata.success.tracking_number;
 
                 _ShipmentResponseHeader.LanguageCode = "En";
                 _ShipmentResponseHeader.RequestStatus = "Ok";
